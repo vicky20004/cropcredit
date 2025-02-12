@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Monitor</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #a8e6cf, #dcedc1);
+            color: black;
+            text-align: center;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 15px 30px;
+        }
+        .navbar h2 {
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            margin: 50px auto;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+        }
+        h1 {
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 15px;
+            padding: 12px;
+            border: none;
+            background: #88d8b0;
+            color: black;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #66cdaa;
+        }
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.5);
+            color: black;
+        }
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.6);
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>IoT Monitor</h2>
+    </div>
+    
+    <!-- Welcome Page -->
+    <div class="container" id="welcomePage" style="display: block;">
+        <h1>Welcome to IoT Monitor</h1>
+        <p>Monitor and input temperature, humidity, and moisture levels easily.</p>
+        <button onclick="showDataEntry()">Get Started</button>
+    </div>
+
+    <!-- Data Entry Page -->
+    <div class="container" id="dataEntryPage" style="display: none;">
+        <h1>Enter Sensor Data</h1>
+        <div class="input-box">
+            <input type="number" id="tempInput" placeholder="Temperature (°C)">
+            <input type="number" id="humidityInput" placeholder="Humidity (%)">
+            <input type="number" id="moistureInput" placeholder="Moisture (%)">
+            <button onclick="submitData()">Submit</button>
+        </div>
+    </div>
+
+    <!-- Output Page -->
+    <div class="container" id="outputPage" style="display: none;">
+        <h1>Recorded Data</h1>
+        <div id="output"></div>
+        <button onclick="goBack()">Go Back</button>
+    </div>
+
+    <script>
+        function showDataEntry() {
+            document.getElementById("welcomePage").style.display = "none";
+            document.getElementById("dataEntryPage").style.display = "block";
+        }
+
+        function submitData() {
+            const temperature = document.getElementById('tempInput').value;
+            const humidity = document.getElementById('humidityInput').value;
+            const moisture = document.getElementById('moistureInput').value;
+
+            if (temperature === "" || humidity === "" || moisture === "") {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            let tempSentence = `Temperature: ${temperature}°C`;
+            let humiditySentence = `Humidity: ${humidity}%`;
+            let moistureSentence = `Moisture: ${moisture}%`;
+
+            document.getElementById('output').innerHTML = `<p>${tempSentence}</p><p>${humiditySentence}</p><p>${moistureSentence}</p>`;
+            
+            document.getElementById("dataEntryPage").style.display = "none";
+            document.getElementById("outputPage").style.display = "block";
+        }
+
+        function goBack() {
+            document.getElementById("outputPage").style.display = "none";
+            document.getElementById("dataEntryPage").style.display = "block";
+        }
+    </script>
+</body>
+</html>
